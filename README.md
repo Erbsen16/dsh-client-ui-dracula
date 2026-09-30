@@ -22,17 +22,21 @@
 
 ## 截图
 
-![首屏与侧栏](docs/01-home.png)
+![对话与代码块](docs/00-chat.webp)
+
+*对话页：语法高亮、代码块底色、消息气泡与正文列宽——主题的主战场。*
+
+![首屏与侧栏](docs/01-home.webp)
 
 *首屏与侧栏：底色 `#282a36`，新会话按钮、选中态与强调色走紫色。*
 
-![设置面板](docs/02-settings.png)
+![设置面板](docs/02-settings.webp)
 
 *设置面板：`--dsw-*` 令牌被整体重指，所以开关、下拉、卡片、侧栏选中项一起变，不是逐个选择器打补丁。*
 
 内嵌的开放平台页面（`extras/platform-purple`，非插件）也按同一套调色板重映射：
 
-![开放平台页面](docs/03-platform-page.png)
+![开放平台页面](docs/03-platform-page.webp)
 
 ## 安装
 

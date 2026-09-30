@@ -22,17 +22,21 @@ There is exactly one stylesheet, injected as `<style data-plugin="dsh-client-ui-
 
 ## Screenshots
 
-![Home and sidebar](docs/01-home.png)
+![Conversation with a code block](docs/00-chat.webp)
+
+*A conversation: syntax highlighting, code-block surface, message bubble and reading column — where the theme does its work.*
+
+![Home and sidebar](docs/01-home.webp)
 
 *Home and sidebar: `#282a36` page, purple accents on the new-session button and selection states.*
 
-![Settings panel](docs/02-settings.png)
+![Settings panel](docs/02-settings.webp)
 
 *Settings: the `--dsw-*` tokens are re-pointed wholesale, so toggles, selects, cards and the sidebar selection all follow — not a stack of per-selector patches.*
 
 The embedded platform page (`extras/platform-purple`, not a plugin) is remapped onto the same palette:
 
-![Platform page](docs/03-platform-page.png)
+![Platform page](docs/03-platform-page.webp)
 
 ## Install
 
