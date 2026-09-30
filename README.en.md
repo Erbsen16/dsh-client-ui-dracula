@@ -86,10 +86,6 @@ Live switch (DevTools console): `__dracula.set(false)` reverts, `__dracula.set(t
 
 Drop the package name from `dsh.profile.bundles`, `pnpm remove dsh-client-ui-dracula`, restart the host.
 
-## Relation to `dsh-client-ui-devtune`
-
-This plugin was extracted from the author's working `dsh-client-ui-devtune` setup: the same stylesheet, with every identifier (package name, the `data-dracula` switch, the `__dracula` global) renamed. Installing both is harmless — each injects a near-identical sheet — but pointless; keep one.
-
 ## extras/platform-purple
 
 The embedded DeepSeek platform page (Settings → Account & balance → Usage) is a remote `platform.deepseek.com` document whose styles are generated at runtime with hashed class names, out of reach of any DSH-side stylesheet. `extras/platform-purple/` patches the preload inside `app.asar` instead: it walks the DOM and remaps each element's computed colours onto the Dracula palette (preserving relative luminance and contrast), re-running on every React re-render.

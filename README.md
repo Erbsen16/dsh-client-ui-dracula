@@ -86,10 +86,6 @@ DSH 的插件市场只安装 [awesome-dsh-plugin](https://github.com/awesome-dsh
 
 把包名从 `dsh.profile.bundles` 里删掉、`pnpm remove dsh-client-ui-dracula`，然后重启宿主。
 
-## 与 `dsh-client-ui-devtune` 的关系
-
-本插件整理自作者本机在用的 `dsh-client-ui-devtune`——同一份样式表，标识（包名、`data-dracula` 开关、`__dracula` 全局）全部换成了 dracula。两个一起装不会出错（各注入一份几乎相同的规则），但没有必要，建议只留一个。
-
 ## extras/platform-purple
 
 内嵌的 DeepSeek 开放平台页面（设置 → 账号与余额 → 查询用量）是 `platform.deepseek.com` 的远程网页，样式由它自己的 JS 运行时生成、类名带哈希，DSH 侧的样式表够不到。`extras/platform-purple/` 改的是 `app.asar` 里的 preload：遍历 DOM，把每个元素的实际颜色按 Dracula 调色板重映射（保持明暗关系与对比度），并跟随 MutationObserver 重绘。
