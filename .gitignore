@@ -11,3 +11,6 @@ preload-platform-account.cjs.patched
 
 .DS_Store
 Thumbs.db
+
+# scratch directory used when capturing README screenshots
+/shots/
