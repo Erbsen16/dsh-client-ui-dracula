@@ -20,6 +20,20 @@
 
 实现上只有一张样式表，注入为 `<style data-plugin="dsh-client-ui-dracula">`，所有规则都挂在 `:root[data-dracula="on"]` 下，所以随时可以整页还原。
 
+## 截图
+
+![首屏与侧栏](docs/01-home.png)
+
+*首屏与侧栏：底色 `#282a36`，新会话按钮、选中态与强调色走紫色。*
+
+![设置面板](docs/02-settings.png)
+
+*设置面板：`--dsw-*` 令牌被整体重指，所以开关、下拉、卡片、侧栏选中项一起变，不是逐个选择器打补丁。*
+
+内嵌的开放平台页面（`extras/platform-purple`，非插件）也按同一套调色板重映射：
+
+![开放平台页面](docs/03-platform-page.png)
+
 ## 安装
 
 `dsh-client-ui-dracula` 是一个自带 `dsh.bundle.patch` 的插件包：装进 profile 并把包名加进 `dsh.profile.bundles` 后，它会自己插入到 profile 的层栈里，无需手写 `cordis.patch.yml`。
@@ -85,6 +99,7 @@ lib/client.js              浏览器半侧：唯一的一张样式表
 lib/index.js               宿主半侧：空实现，只为让 dsh.client 被 Loader 看见
 cordis.patch.yml           bundle patch：把 ui-dracula 这一行插进 profile
 scripts/smoke.mjs          npm test：无依赖的 DOM 桩冒烟测试
+docs/                      README 用的截图
 extras/platform-purple/    可选：内嵌平台页面调色（改 app.asar）
 ```
 

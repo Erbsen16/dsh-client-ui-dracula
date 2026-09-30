@@ -20,6 +20,20 @@ Colours come from [VS Code's Dracula theme](https://draculatheme.com/) (MIT). **
 
 There is exactly one stylesheet, injected as `<style data-plugin="dsh-client-ui-dracula">`, and every rule hangs off `:root[data-dracula="on"]` — so the page can be reverted whole at any moment.
 
+## Screenshots
+
+![Home and sidebar](docs/01-home.png)
+
+*Home and sidebar: `#282a36` page, purple accents on the new-session button and selection states.*
+
+![Settings panel](docs/02-settings.png)
+
+*Settings: the `--dsw-*` tokens are re-pointed wholesale, so toggles, selects, cards and the sidebar selection all follow — not a stack of per-selector patches.*
+
+The embedded platform page (`extras/platform-purple`, not a plugin) is remapped onto the same palette:
+
+![Platform page](docs/03-platform-page.png)
+
 ## Install
 
 The package ships its own `dsh.bundle.patch`: once installed and listed in `dsh.profile.bundles`, it inserts itself into the profile's layer stack — no hand-written `cordis.patch.yml` row needed.
@@ -85,6 +99,7 @@ lib/client.js              browser half: the single stylesheet
 lib/index.js               host half: a no-op row so dsh.client is seen by the Loader
 cordis.patch.yml           bundle patch: inserts the ui-dracula row
 scripts/smoke.mjs          npm test: dependency-free smoke test over a DOM stub
+docs/                      screenshots used by the READMEs
 extras/platform-purple/    optional: recolours the embedded platform page (patches app.asar)
 ```
 

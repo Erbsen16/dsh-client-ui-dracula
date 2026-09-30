@@ -2,6 +2,10 @@
 
 让桌面端内嵌的 **DeepSeek 开放平台页面**（设置 → 账号与余额 → 查询用量 打开的那个网页）呈现 Dracula（VS Code「吸血鬼」）配色。它是 `dsh-client-ui-dracula` 仓库里的附加件，**不是 DSH 插件**。
 
+![开放平台页面打上补丁后](../../docs/03-platform-page.png)
+
+*打上补丁后的用量页面：卡片、文字、图表轴与滚动条都落在 Dracula 的明暗阶梯上。*
+
 ## 为什么需要单独一套
 
 - 那个页面是 `platform.deepseek.com` 的远程网页，宿主用 Electron 的 `WebContentsView` 打开它，样式由它自己的 JS 运行时生成（类名带哈希、没有 CSS 变量），所以 DSH 侧的样式表够不到它。
