@@ -1,0 +1,6 @@
+# dsh bundle patch: inserts this theme into a profile's layer stack.
+# The package also declares it as `dsh.bundle.patch` in package.json, which is
+# how the plugin manager and the market reconcile `dsh.profile.bundles`.
+- insert:
+    - id: ui-dracula
+      name: 'dsh-client-ui-dracula'

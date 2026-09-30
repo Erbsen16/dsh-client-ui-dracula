@@ -1,0 +1,59 @@
+{
+  "name": "dsh-client-ui-dracula",
+  "version": "1.0.0",
+  "description": "Dracula dark theme for the DeepSeek Harness Web GUI — the VS Code vampire palette plus programmer-oriented typography tuning. DSH Web GUI 的 Dracula 深色主题（含排版调优）。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "deepseek",
+    "harness",
+    "dsh",
+    "dsh-plugin",
+    "theme",
+    "dracula",
+    "dark-theme",
+    "vscode"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Erbsen16/dsh-client-ui-dracula.git"
+  },
+  "homepage": "https://github.com/Erbsen16/dsh-client-ui-dracula#readme",
+  "bugs": {
+    "url": "https://github.com/Erbsen16/dsh-client-ui-dracula/issues"
+  },
+  "scripts": {
+    "test": "node scripts/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
