@@ -42,9 +42,20 @@ The embedded platform page (`extras/platform-purple`, not a plugin) is remapped 
 
 The package ships its own `dsh.bundle.patch`: once installed and listed in `dsh.profile.bundles`, it inserts itself into the profile's layer stack — no hand-written `cordis.patch.yml` row needed.
 
-### Desktop (Electron, the `desktop` profile)
+### Desktop, graphical (recommended)
 
-The desktop profile is owned by the host, so the CLI refuses to touch it (`profile "desktop" is managed exclusively by the Electron application`). Use the host's plugin manager, or install by hand:
+Settings → Plugins → **+ Add plugin** → enter either of these → install:
+
+| What to enter | How it resolves |
+|---|---|
+| `dsh-client-ui-dracula` | npm (pick the China mirror as the install source); published on [npm](https://www.npmjs.com/package/dsh-client-ui-dracula) |
+| `https://github.com/Erbsen16/dsh-client-ui-dracula` | straight from the GitHub source archive, no npm involved |
+
+> **Installed but nothing changed?** Check that `dsh-client-ui-dracula` is listed in the profile's `dsh.profile.bundles`. The official manager sometimes installs the dependency without reconciling that list, and this plugin only inserts its `ui-dracula` row (via `dsh.bundle.patch`) once it is a listed bundle — add the one line and the HMR pass picks it up, or restart the host.
+
+### Desktop, by hand
+
+The desktop profile is owned by the host, so the CLI refuses to touch it (`profile "desktop" is managed exclusively by the Electron application`). Install by hand:
 
 ```powershell
 # 1) install into the desktop profile
@@ -59,7 +70,8 @@ pnpm add github:Erbsen16/dsh-client-ui-dracula
 ### Other profiles (`web` / `tui` / your own)
 
 ```powershell
-dsh plugin --profile web add github:Erbsen16/dsh-client-ui-dracula
+dsh plugin --profile web add dsh-client-ui-dracula                    # from npm (mirror-friendly)
+dsh plugin --profile web add github:Erbsen16/dsh-client-ui-dracula    # from GitHub
 ```
 
 `dsh plugin` is a thin pnpm passthrough, so any source pnpm understands works: an npm name, `github:user/repo`, a tarball URL, a local path.

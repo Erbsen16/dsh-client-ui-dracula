@@ -42,9 +42,20 @@
 
 `dsh-client-ui-dracula` 是一个自带 `dsh.bundle.patch` 的插件包：装进 profile 并把包名加进 `dsh.profile.bundles` 后，它会自己插入到 profile 的层栈里，无需手写 `cordis.patch.yml`。
 
-### 桌面端（Electron，`desktop` profile）
+### 桌面端图形界面（推荐）
 
-桌面端的 profile 由宿主独占管理，命令行会拒绝直接操作（`profile "desktop" is managed exclusively by the Electron application`），所以走宿主自己的插件管理界面，或者手动装：
+设置 → 插件 → 右上角 **+ 添加插件** → 填下面任意一个 → 安装：
+
+| 填什么 | 走哪条路 |
+|---|---|
+| `dsh-client-ui-dracula` | npm（安装源选「中国大陆镜像源」）；已发布到 [npm](https://www.npmjs.com/package/dsh-client-ui-dracula) |
+| `https://github.com/Erbsen16/dsh-client-ui-dracula` | 直接从 GitHub 拉源码，不经过 npm |
+
+> **装完界面没变化？** 先确认 `dsh-client-ui-dracula` 出现在 profile 的 `dsh.profile.bundles` 里。实测官方管理器有时只装了依赖、没把它加进 bundles，而本插件是靠 `dsh.bundle.patch` 在**被列为 bundle 时**才插入 `ui-dracula` 那一行——手动补一行即可（HMR 会立刻重组，或重启宿主）。
+
+### 桌面端（命令行 / 手动装）
+
+桌面端的 profile 由宿主独占管理，命令行会拒绝直接操作（`profile "desktop" is managed exclusively by the Electron application`），所以手动装：
 
 ```powershell
 # 1) 装进 desktop profile
@@ -59,7 +70,8 @@ pnpm add github:Erbsen16/dsh-client-ui-dracula
 ### 其他 profile（`web` / `tui` / 自建）
 
 ```powershell
-dsh plugin --profile web add github:Erbsen16/dsh-client-ui-dracula
+dsh plugin --profile web add dsh-client-ui-dracula                    # 从 npm（可走国内镜像）
+dsh plugin --profile web add github:Erbsen16/dsh-client-ui-dracula    # 从 GitHub
 ```
 
 `dsh plugin` 是 pnpm 的直通封装，所以任何 pnpm 能识别的来源都可以：npm 包名、`github:user/repo`、tarball URL、本地路径。
