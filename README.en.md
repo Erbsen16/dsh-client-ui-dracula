@@ -1,124 +1,121 @@
 # dsh-client-ui-dracula
 
-**A Dracula dark theme for the DeepSeek Harness Web GUI** — the VS Code "vampire" palette, plus a set of programmer-oriented typography refinements.
+A [Dracula](https://draculatheme.com/) theme for the DeepSeek Harness web UI — the same palette VS Code ships. The code surfaces and the type scale got some attention too.
 
 [中文说明](README.md)
 
 ```
-Background #282a36 · Current line / bubble #44475a · Foreground #f8f8f2 · Comment #6272a4
-Cyan #8be9fd · Green #50fa7b · Orange #ffb86c · Pink #ff79c6 · Purple #bd93f9 · Red #ff5555 · Yellow #f1fa8c
+Background #282a36   Current line / bubble #44475a   Foreground #f8f8f2   Comment #6272a4
+Cyan #8be9fd   Green #50fa7b   Orange #ffb86c   Pink #ff79c6   Purple #bd93f9   Red #ff5555   Yellow #f1fa8c
 ```
 
-Colours come from [VS Code's Dracula theme](https://draculatheme.com/) (MIT). **Dark mode only** — switching Appearance back to light still gives the shipped, legible palette.
+Dark mode only. Switch Appearance back to light and you get the shipped palette — no pale purple on white.
 
 ## What it changes
 
-| Scope | Content |
-|---|---|
-| Palette (`lib/client.js`, sections 11–12) | Page, cards, overlays, borders, labels, brand/accent, state colours, code blocks and inline code, syntax highlighting (shiki tokens), the JSON tree, scrollbars, selection, file-diff backgrounds, onboarding gradients — all re-pointed to Dracula |
-| Typography (sections 0–10) | Monospace code face and UI face, a tighter type scale, a 1080px content column, code blocks that scroll instead of re-wrapping, taller tool output, 12px scrollbars |
+Instead of patching selectors one by one, the sheet re-points the product's own semantic colour tokens (`--dsw-*`, `--shiki-*`, `--json-tree-*`) at the Dracula palette. Pages, cards, overlays, borders, labels, brand and state colours, code blocks, inline code, syntax highlighting, the JSON tree, scrollbars, selection and the file-diff view all follow — and the product's own judgements about which surface sits above which are left intact, only the colours move.
 
-There is exactly one stylesheet, injected as `<style data-plugin="dsh-client-ui-dracula">`, and every rule hangs off `:root[data-dracula="on"]` — so the page can be reverted whole at any moment.
+The typography got a few changes of its own:
+
+- programming font stacks for code and UI (Cascadia Mono / Segoe UI Variable Text by default), with CJK falling back to YaHei / PingFang
+- one step tighter on the type scale, with slightly shorter line heights
+- the reading column goes from the shipped 748px to 1080px
+- code blocks scroll instead of wrapping. The shipped rule is `pre-wrap` + `break-all`, which cuts long identifiers in half
+- a taller tool-output area, and 12px scrollbars
+
+All of it is one stylesheet, injected as `<style data-plugin="dsh-client-ui-dracula">`, every rule scoped to `:root[data-dracula="on"]`. Drop that attribute and the page is back to stock immediately — no reload, no restart.
 
 ## Screenshots
 
 ![Conversation with a code block](docs/00-chat.webp)
 
-*A conversation: syntax highlighting, code-block surface, message bubble and reading column — where the theme does its work.*
+*A conversation. Syntax highlighting, the code-block surface, bubbles and the reading column — where most of the work went.*
 
 ![Home and sidebar](docs/01-home.webp)
 
-*Home and sidebar: `#282a36` page, purple accents on the new-session button and selection states.*
+*Home and sidebar. `#282a36` underneath, purple on the new-session button, selection states and accents.*
 
 ![Settings panel](docs/02-settings.webp)
 
-*Settings: the `--dsw-*` tokens are re-pointed wholesale, so toggles, selects, cards and the sidebar selection all follow — not a stack of per-selector patches.*
+*Settings. Because the `--dsw-*` tokens are re-pointed wholesale, toggles, selects, cards and the sidebar selection all move together — no per-selector patches.*
 
-The embedded platform page (`extras/platform-purple`, not a plugin) is remapped onto the same palette:
+The embedded platform page (part of `extras/`, not a plugin) uses the same palette:
 
 ![Platform page](docs/03-platform-page.webp)
 
 ## Install
 
-The package ships its own `dsh.bundle.patch`: once installed and listed in `dsh.profile.bundles`, it inserts itself into the profile's layer stack — no hand-written `cordis.patch.yml` row needed.
+The package declares `dsh.bundle.patch`. Once it is installed and listed in `dsh.profile.bundles`, it inserts its own `ui-dracula` row into the layer stack — there is no `cordis.patch.yml` to hand-edit.
 
-### Desktop, graphical (recommended)
+On the desktop the graphical route is the least fuss: Settings → Plugins → **+ Add plugin**, then enter either of these.
 
-Settings → Plugins → **+ Add plugin** → enter either of these → install:
-
-| What to enter | How it resolves |
+| What to enter | Where it comes from |
 |---|---|
-| `dsh-client-ui-dracula` | npm (pick the China mirror as the install source); published on [npm](https://www.npmjs.com/package/dsh-client-ui-dracula) |
-| `https://github.com/Erbsen16/dsh-client-ui-dracula` | straight from the GitHub source archive, no npm involved |
+| `dsh-client-ui-dracula` | npm, with the China mirror as the install source. The package is [on npm](https://www.npmjs.com/package/dsh-client-ui-dracula) |
+| `https://github.com/Erbsen16/dsh-client-ui-dracula` | the GitHub source archive, no npm involved |
 
-> **Installed but nothing changed?** Check that `dsh-client-ui-dracula` is listed in the profile's `dsh.profile.bundles`. The official manager sometimes installs the dependency without reconciling that list, and this plugin only inserts its `ui-dracula` row (via `dsh.bundle.patch`) once it is a listed bundle — add the one line and the HMR pass picks it up, or restart the host.
+If nothing changes after installing, check that `dsh-client-ui-dracula` is in the profile's `dsh.profile.bundles`. On my own install the official manager added the dependency but not the bundle row, and this plugin only inserts `ui-dracula` once it is treated as a bundle. Add the line and the HMR pass picks it up; otherwise restart the host.
 
-### Desktop, by hand
-
-The desktop profile is owned by the host, so the CLI refuses to touch it (`profile "desktop" is managed exclusively by the Electron application`). Install by hand:
+For profiles other than `desktop`, use the CLI:
 
 ```powershell
-# 1) install into the desktop profile
-cd $env:USERPROFILE\.dsh\profiles\desktop
-pnpm add github:Erbsen16/dsh-client-ui-dracula
-
-# 2) add "dsh-client-ui-dracula" to dsh.profile.bundles in that directory's package.json
-
-# 3) restart the host
-```
-
-### Other profiles (`web` / `tui` / your own)
-
-```powershell
-dsh plugin --profile web add dsh-client-ui-dracula                    # from npm (mirror-friendly)
+dsh plugin --profile web add dsh-client-ui-dracula                    # from npm
 dsh plugin --profile web add github:Erbsen16/dsh-client-ui-dracula    # from GitHub
 ```
 
-`dsh plugin` is a thin pnpm passthrough, so any source pnpm understands works: an npm name, `github:user/repo`, a tarball URL, a local path.
+`dsh plugin` is a thin pnpm passthrough, so any source pnpm understands works: an npm name, `github:user/repo`, a tarball URL, a local directory.
 
-### Plugin market
+The `desktop` profile is owned by the host, and the CLI refuses to touch it (`profile "desktop" is managed exclusively by the Electron application`). A manual install looks like this:
 
-The DSH market only installs sources listed in the curated [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin) registry; to be listed, open a PR adding one entry there.
+```powershell
+cd $env:USERPROFILE\.dsh\profiles\desktop
+pnpm add github:Erbsen16/dsh-client-ui-dracula
+# then add "dsh-client-ui-dracula" to dsh.profile.bundles in that directory's package.json
+```
+
+This plugin is not in the DSH plugin market yet. The market only installs sources listed in [awesome-dsh-plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin); getting listed means opening an entry PR there.
 
 ## Tuning
 
-Section 0 of `lib/client.js` holds the three knobs:
+Section 0 of `lib/client.js` holds the three variables:
 
 ```js
-'--dracula-content-width: 1080px;'   // reading/composer column (the shipped value is 748px)
-'--dracula-code-font: "Cascadia Mono", ...';  // programming font
-'--dracula-ui-font: "Segoe UI Variable Text", ...';  // UI font — use var(--dracula-code-font) for an all-monospace UI
+'--dracula-content-width: 1080px;'                    // reading and composer column, 748px stock
+'--dracula-code-font: "Cascadia Mono", ...';          // programming font
+'--dracula-ui-font: "Segoe UI Variable Text", ...';   // UI font — use var(--dracula-code-font) for all-monospace
 ```
 
-Saving the file hot-reloads the stylesheet into every open page; no refresh needed.
+Saving is enough; the client HMR pass reloads the stylesheet into every open page.
 
-Live switch (DevTools console): `__dracula.set(false)` reverts, `__dracula.set(true)` re-applies.
+To compare side by side, `__dracula.set(false)` in the DevTools console reverts, `set(true)` brings it back.
 
 ## Uninstall
 
-Drop the package name from `dsh.profile.bundles`, `pnpm remove dsh-client-ui-dracula`, restart the host.
+Drop the package name from `dsh.profile.bundles`, run `pnpm remove dsh-client-ui-dracula`, restart the host.
 
-## extras/platform-purple
+## extras: the embedded platform page
 
-The embedded DeepSeek platform page (Settings → Account & balance → Usage) is a remote `platform.deepseek.com` document whose styles are generated at runtime with hashed class names, out of reach of any DSH-side stylesheet. `extras/platform-purple/` patches the preload inside `app.asar` instead: it walks the DOM and remaps each element's computed colours onto the Dracula palette (preserving relative luminance and contrast), re-running on every React re-render.
+Settings → Account & balance → Usage opens a remote `platform.deepseek.com` document. Its styles are generated at runtime with hashed class names, out of reach of anything on the DSH side.
 
-It is **not a plugin** — the plugin manager cannot install it, a host upgrade overwrites `app.asar`, and it is an unofficial modification used at your own risk. See [extras/platform-purple/README.md](extras/platform-purple/README.md).
+`extras/platform-purple/` takes the other route: it patches the preload inside `app.asar`, walks the DOM remapping each element's computed colours onto the Dracula palette while preserving relative luminance and contrast, and re-runs on every React re-render through a MutationObserver.
 
-## Layout
+It is not a plugin, the plugin manager cannot install it, and a host upgrade overwrites `app.asar` — an unofficial modification used at your own risk. See [extras/platform-purple/README.md](extras/platform-purple/README.md).
+
+## Files
 
 ```
-lib/client.js              browser half: the single stylesheet
-lib/index.js               host half: a no-op row so dsh.client is seen by the Loader
-cordis.patch.yml           bundle patch: inserts the ui-dracula row
-scripts/smoke.mjs          npm test: dependency-free smoke test over a DOM stub
-docs/                      screenshots used by the READMEs
-extras/platform-purple/    optional: recolours the embedded platform page (patches app.asar)
+lib/client.js        browser half — the single stylesheet
+lib/index.js         host half — a no-op so dsh.client is visible to the Loader
+cordis.patch.yml     bundle patch
+scripts/smoke.mjs    npm test — smoke test over a DOM stub, no dependencies
+docs/                screenshots used by these READMEs
+extras/              the platform-page recolour patch, not a plugin
 ```
 
 ## Compatibility
 
-Built against the frontend of **DSH 0.2.0-rc.2 / 0.1.7-rc.2**. The stylesheet's main channel is the product's CSS variables (`--dsw-*`, `--shiki-*`, `--json-tree-*`), which is stable; a few rules name hashed CSS-module classes (`.wSkVaW_root`, `._Xvjua_body`, …) that a DSH upgrade may rename — those refinements would silently stop applying, and nothing breaks.
+Written against the DSH 0.2.0-rc.2 / 0.1.7-rc.2 frontend. The sheet's main channel is the product's CSS variables (`--dsw-*`, `--shiki-*`, `--json-tree-*`), which is stable; a handful of rules name hashed CSS-module classes (`.wSkVaW_root`, `._Xvjua_body`, …), and a DSH upgrade that renames them simply loses those refinements — nothing errors, that part just falls back to the shipped styles.
 
 ## License
 
-[MIT](LICENSE). Palette by [Dracula Theme](https://draculatheme.com/) (MIT).
+[MIT](LICENSE). Palette from [Dracula Theme](https://draculatheme.com/), also MIT.
